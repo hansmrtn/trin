@@ -24,6 +24,12 @@ pub const DEFAULT_STORAGE_CAPACITY: &str = "100000"; // 100mb
 )]
 pub struct TrinConfig {
     #[structopt(
+        long = "ephemeral",
+        help = "this is a test"
+    )]
+    pub ephemeral: String,
+
+    #[structopt(
         default_value = "ipc",
         possible_values(&["http", "ipc"]),
         long = "web3-transport",
