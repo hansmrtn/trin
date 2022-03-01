@@ -24,8 +24,9 @@ pub const DEFAULT_STORAGE_CAPACITY: &str = "100000"; // 100mb
 )]
 pub struct TrinConfig {
     #[structopt(
+        short = "e",
         long = "ephemeral",
-        help = "this is a test"
+        help = "TODO: A clear and succint description"
     )]
     pub ephemeral: bool,
 
