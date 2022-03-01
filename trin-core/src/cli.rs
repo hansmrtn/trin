@@ -27,7 +27,7 @@ pub struct TrinConfig {
         long = "ephemeral",
         help = "this is a test"
     )]
-    pub ephemeral: String,
+    pub ephemeral: bool,
 
     #[structopt(
         default_value = "ipc",
@@ -185,6 +185,7 @@ mod test {
             web3_transport: "ipc".to_string(),
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
+            ephemeral: false, 
             bootnodes: vec![],
             external_addr: None,
             private_key: None,
@@ -216,6 +217,7 @@ mod test {
             web3_transport: "http".to_string(),
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
+            ephemeral: false, 
             bootnodes: vec![],
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
@@ -258,6 +260,7 @@ mod test {
             web3_transport: "ipc".to_string(),
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
+            ephemeral: false, 
             bootnodes: vec![],
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
@@ -296,6 +299,7 @@ mod test {
             web3_transport: "ipc".to_string(),
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
+            ephemeral: false,
             bootnodes: vec![],
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
@@ -358,6 +362,7 @@ mod test {
             web3_transport: "ipc".to_string(),
             discovery_port: 999,
             internal_ip: false,
+            ephemeral: false, 
             bootnodes: vec![],
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
@@ -382,6 +387,7 @@ mod test {
             web3_transport: "ipc".to_string(),
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
+            ephemeral: false, 
             bootnodes: vec!["enr:-aoeu".to_string(), "enr:-htns".to_string()],
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
@@ -428,6 +434,7 @@ mod test {
             web3_transport: "ipc".to_string(),
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
+            ephemeral: false, 
             bootnodes: vec![],
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
