@@ -44,7 +44,9 @@ USAGE:
     trin [OPTIONS]
 
 FLAGS:
+
         --enable-metrics    Enable prometheus metrics reporting (requires --metrics-url)
+    -e, --ephemeral         // TODO: A clear and succint description.
     -h, --help              Prints help information
         --internal-ip       (For testing purposes) Use local ip address rather than external via STUN.
     -V, --version           Prints version information
@@ -54,7 +56,6 @@ OPTIONS:
                                               peers to initially add to the local routing table [default: ]
         --discovery-port <discovery_port>     The UDP port to listen on. [default: 9000]
         --external-address <external_addr>    The public IP address and port under which this node is accessible
-        --ephemeral                           // TODO: A good and succint description.
         --kb <kb>                             Maximum number of kilobytes of total data to store in the DB
                                               [default: 100000]
         --metrics-url <metrics-url>           URL for prometheus server

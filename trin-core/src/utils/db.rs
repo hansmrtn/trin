@@ -14,24 +14,26 @@ pub fn get_data_dir(node_id: NodeId) -> String {
     let trin_config = TrinConfig::from_cli();
 
     fs::create_dir_all(&application_path).expect("Unable to create data directory folder");
+    
     // Append first 8 characters of Node ID
     let node_id_string = hex::encode(node_id.raw());
     let suffix = &node_id_string[..8];
     let path = format!("{}/Trin_{}", &application_path, &suffix);
+    
     if trin_config.ephemeral {
         fs::create_dir_all(&path).expect("Unable to create ephemeral data directory");
         let paths = fs::read_dir(&application_path).unwrap();
-        // TODO: Check if SystemTime::now is appropriate for comparing mins
         // NOTE: SystemTime is machine dependent
-        let mut min = SystemTime::now();
+        let mut min_timestamp = SystemTime::now();
         let mut min_path = PathBuf::new();
         let mut n_paths = 0;
         for p in paths {
             n_paths += 1;
             if let Ok(p) = p {
+                // Get oldest last-modified Trin_nodeId directory timestamp and path
                 if let Ok(metadata) = p.metadata() {
-                    if metadata.modified().unwrap() < min {
-                        min = metadata.modified().unwrap();
+                    if metadata.modified().unwrap() < min_timestamp {
+                        min_timestamp = metadata.modified().unwrap();
                         min_path = p.path();
                     }
                 } else {
@@ -39,16 +41,21 @@ pub fn get_data_dir(node_id: NodeId) -> String {
                 }
             }
         }
-        // NOTE: Twelve is arbitrary and should probably be a user preference
+        // Remove the oldest last-modified Trin_nodeId directory 
+        // TODO: Twelve is arbitrary and should probably be a user preference
         if n_paths > 12 {
             fs::remove_dir_all(&min_path)
                 .expect("Failed to remove oldest modified ephemeral data directory");
         }
     }
+
     path
 }
 
 pub fn get_default_data_dir() -> String {
+    //  Linux:	    $XDG_DATA_HOME/Trin or $HOME/.local/share/Trin	
+    //  macOS:	    $HOME/Library/Application Support/Trin	
+    //  Windows:    C:\Users\Username\AppData\Roaming\Trin\data
     let application_path = "Trin".to_owned();
 
     match ProjectDirs::from("", "", &application_path) {
