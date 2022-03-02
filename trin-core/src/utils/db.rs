@@ -1,5 +1,7 @@
 use std::{env, fs};
 
+use log::debug;
+
 use crate::cli::TrinConfig;
 use directories::ProjectDirs;
 use discv5::enr::NodeId;
@@ -18,38 +20,38 @@ pub fn get_data_dir(node_id: NodeId) -> String {
     // Append first 8 characters of Node ID
     let node_id_string = hex::encode(node_id.raw());
     let suffix = &node_id_string[..8];
-    let path = format!("{}/Trin_{}", &application_path, &suffix);
+    let session_path = format!("{}/Trin_{}", &application_path, &suffix);
 
     if trin_config.ephemeral {
-        fs::create_dir_all(&path).expect("Unable to create ephemeral data directory");
-        let paths = fs::read_dir(&application_path).unwrap();
+        fs::create_dir_all(&session_path).expect("Unable to create ephemeral data directory");
+        let trin_paths = fs::read_dir(&application_path).unwrap();
         // NOTE: SystemTime is machine dependent
         let mut min_timestamp = SystemTime::now();
         let mut min_path = PathBuf::new();
-        let mut n_paths = 0;
-        for p in paths {
-            n_paths += 1;
-            if let Ok(p) = p {
+        let mut path_count = 0;
+        for path in trin_paths {
+            path_count += 1;
+            if let Ok(path) = path {
                 // Get oldest last-modified Trin_nodeId directory timestamp and path
-                if let Ok(metadata) = p.metadata() {
+                if let Ok(metadata) = path.metadata() {
                     if metadata.modified().unwrap() < min_timestamp {
                         min_timestamp = metadata.modified().unwrap();
-                        min_path = p.path();
+                        min_path = path.path();
                     }
                 } else {
-                    println!("Couldn't get metadata for {:?}", p.path());
+                    debug!("Couldn't get metadata for {:?}", path.path());
                 }
             }
         }
         // Remove the oldest last-modified Trin_nodeId directory
         // TODO: Twelve is arbitrary and should probably be a user preference
-        if n_paths > 12 {
+        if path_count > 12 {
             fs::remove_dir_all(&min_path)
                 .expect("Failed to remove oldest modified ephemeral data directory");
         }
     }
 
-    path
+    session_path
 }
 
 pub fn get_default_data_dir() -> String {
