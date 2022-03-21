@@ -1,6 +1,4 @@
-# trin
-(a working name)
-
+# Trin
 Trin is an Ethereum "portal": a json-rpc server with nearly instant sync, and
 low CPU & storage usage.
 
@@ -46,9 +44,12 @@ USAGE:
     trin [OPTIONS]
 
 FLAGS:
-    -e, --ephemeral  // TODO: A clear and succint description.
-    -h, --help       Prints help information
-    -V, --version    Prints version information
+
+        --enable-metrics    Enable prometheus metrics reporting (requires --metrics-url)
+    -e, --ephemeral         // TODO: A clear and succint description.
+    -h, --help              Prints help information
+        --internal-ip       (For testing purposes) Use local ip address rather than external via STUN.
+    -V, --version           Prints version information
 
 OPTIONS:
         --bootnodes <bootnodes>               One or more comma-delimited base64-encoded ENR's or multiaddr strings of
@@ -57,6 +58,7 @@ OPTIONS:
         --external-address <external_addr>    The public IP address and port under which this node is accessible
         --kb <kb>                             Maximum number of kilobytes of total data to store in the DB
                                               [default: 100000]
+        --metrics-url <metrics-url>           URL for prometheus server
         --networks <networks>...              Comma-separated list of which portal subnetworks to activate
                                               [default: history,state]
         --pool-size <pool_size>               max size of threadpool [default: 2]

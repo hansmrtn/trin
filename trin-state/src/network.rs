@@ -38,6 +38,7 @@ impl StateNetwork {
         let storage = Arc::new(PortalStorage::new(storage_config).unwrap());
         let config = OverlayConfig {
             bootnode_enrs: portal_config.bootnode_enrs.clone(),
+            enable_metrics: portal_config.enable_metrics,
             ..Default::default()
         };
         let overlay = OverlayProtocol::new(
@@ -104,6 +105,11 @@ impl StateNetwork {
                 Err(OverlayRequestError::Discv5Error(error)) => {
                     debug!("Unexpected error while bonding with {} => {:?}", enr, error);
                     return Err(anyhow!(error.to_string()));
+                }
+                _ => {
+                    let msg = format!("Unexpected error while bonding with {enr}");
+                    debug!("{msg}");
+                    return Err(anyhow!(msg));
                 }
             }
         }

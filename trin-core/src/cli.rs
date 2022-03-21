@@ -88,7 +88,7 @@ pub struct TrinConfig {
     #[structopt(
         validator(check_private_key_length),
         long = "unsafe-private-key",
-        help = "Hex encoded 32 byte private key (considered unsafe to pass in pk as cli arg, as it's stored in terminal history - keyfile support coming soon)"
+        help = "Hex encoded 32 byte private key (considered unsafe as it's stored in terminal history - keyfile support coming soon)"
     )]
     pub private_key: Option<HexData>,
 
@@ -107,6 +107,16 @@ pub struct TrinConfig {
         help = "Maximum number of kilobytes of total data to store in the DB"
     )]
     pub kb: u32,
+
+    #[structopt(
+        long = "enable-metrics",
+        help = "Enable prometheus metrics reporting (requires --metrics-url)",
+        requires = "metrics-url"
+    )]
+    pub enable_metrics: bool,
+
+    #[structopt(long = "metrics-url", help = "URL for prometheus server")]
+    pub metrics_url: Option<String>,
 }
 
 impl TrinConfig {
@@ -190,6 +200,8 @@ mod test {
             bootnodes: vec![],
             external_addr: None,
             private_key: None,
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -220,6 +232,8 @@ mod test {
             internal_ip: false,
             ephemeral: false,
             bootnodes: vec![],
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -263,6 +277,8 @@ mod test {
             internal_ip: false,
             ephemeral: false,
             bootnodes: vec![],
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -302,6 +318,8 @@ mod test {
             internal_ip: false,
             ephemeral: false,
             bootnodes: vec![],
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -365,6 +383,8 @@ mod test {
             internal_ip: false,
             ephemeral: false,
             bootnodes: vec![],
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -390,6 +410,8 @@ mod test {
             internal_ip: false,
             ephemeral: false,
             bootnodes: vec!["enr:-aoeu".to_string(), "enr:-htns".to_string()],
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -437,6 +459,8 @@ mod test {
             internal_ip: false,
             ephemeral: false,
             bootnodes: vec![],
+            enable_metrics: false,
+            metrics_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
