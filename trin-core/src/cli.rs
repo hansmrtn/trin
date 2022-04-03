@@ -102,7 +102,7 @@ pub struct TrinConfig {
     pub kb: u32,
 
     #[structopt(
-        long = "enable-metrics-with-url", 
+        long = "enable-metrics-with-url",
         help = "Enable prometheus metrics reporting (requires URL for prometheus server)"
     )]
     pub enable_metrics_with_url: Option<String>,
