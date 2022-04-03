@@ -102,14 +102,10 @@ pub struct TrinConfig {
     pub kb: u32,
 
     #[structopt(
-        long = "enable-metrics",
-        help = "Enable prometheus metrics reporting (requires --metrics-url)",
-        requires = "metrics-url"
+        long = "enable-metrics-with-url", 
+        help = "Enable prometheus metrics reporting (requires URL for prometheus server)"
     )]
-    pub enable_metrics: bool,
-
-    #[structopt(long = "metrics-url", help = "URL for prometheus server")]
-    pub metrics_url: Option<String>,
+    pub enable_metrics_with_url: Option<String>,
 }
 
 impl TrinConfig {
@@ -192,8 +188,7 @@ mod test {
             bootnodes: vec![],
             external_addr: None,
             private_key: None,
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -223,8 +218,7 @@ mod test {
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
             bootnodes: vec![],
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -267,8 +261,7 @@ mod test {
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
             bootnodes: vec![],
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -307,8 +300,7 @@ mod test {
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
             bootnodes: vec![],
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -371,8 +363,7 @@ mod test {
             discovery_port: 999,
             internal_ip: false,
             bootnodes: vec![],
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -397,8 +388,7 @@ mod test {
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
             bootnodes: vec!["enr:-aoeu".to_string(), "enr:-htns".to_string()],
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
@@ -445,8 +435,7 @@ mod test {
             discovery_port: DEFAULT_DISCOVERY_PORT.parse().unwrap(),
             internal_ip: false,
             bootnodes: vec![],
-            enable_metrics: false,
-            metrics_url: None,
+            enable_metrics_with_url: None,
             networks: DEFAULT_SUBNETWORKS
                 .split(',')
                 .map(|n| n.to_string())
